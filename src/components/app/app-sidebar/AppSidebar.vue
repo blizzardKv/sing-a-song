@@ -24,34 +24,34 @@ const onToggleButtonClick = () => {
     <div class="col">
       <q-list>
         <q-item
-         v-for="(item, key) in sidebarItems"
-         :key="key"
-         :to="item.route"
-         :disable="!item.route"
-         class="app-sidebar__menu-item"
-         active-class="app-sidebar__menu-item_active"
-         clickable
-         dense
-       >
-         <q-item-section avatar>
-           <q-icon :name="item.icon" />
-         </q-item-section>
-         <q-item-section>
-           <q-item-label>
-             {{ item.title }}
-           </q-item-label>
-         </q-item-section>
-         <q-tooltip
-           v-if="isMinifiedState"
-           :offset="[10, 10]"
-           anchor="center right"
-           self="center left"
-           transition-show="jump-right"
-           transition-hide="jump-left"
-         >
-           {{ item.title }}
-         </q-tooltip>
-       </q-item>
+          v-for="(item, key) in sidebarItems"
+          :key="key"
+          :to="item.route"
+          :disable="!item.route"
+          class="app-sidebar__menu-item"
+          active-class="app-sidebar__menu-item_active"
+          clickable
+          dense
+        >
+          <q-item-section avatar>
+            <q-icon :name="item.icon" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>
+              {{ item.title }}
+            </q-item-label>
+          </q-item-section>
+          <q-tooltip
+            v-if="isMinifiedState"
+            :offset="[10, 10]"
+            anchor="center right"
+            self="center left"
+            transition-show="jump-right"
+            transition-hide="jump-left"
+          >
+            {{ item.title }}
+          </q-tooltip>
+        </q-item>
       </q-list>
     </div>
     <q-item

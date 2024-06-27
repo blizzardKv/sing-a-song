@@ -16,14 +16,46 @@ const onDialogHide = () => {
 </script>
 
 <template>
-  <q-dialog v-model="isDialogShown" @hide="onDialogHide">
-    <q-form>
-      <q-input v-model="songName" label="Название песни" required />
-      <q-btn type="submit">Добавить</q-btn>
-    </q-form>
+  <q-dialog
+    v-model="isDialogShown"
+    class="add-song"
+    @hide="onDialogHide"
+  >
+    <q-card class="q-pa-md">
+      <q-form>
+        <q-card-section>
+          <h5 class="q-ma-none">
+            Добавить песню в альбом
+          </h5>
+        </q-card-section>
+
+        <q-card-section class="q-mb-md">
+          <q-input
+            v-model="songName"
+            label="Название песни"
+            required
+          />
+        </q-card-section>
+
+        <q-card-section>
+          <q-btn
+            type="submit"
+            dense
+            no-caps
+            color="accent"
+          >
+            Добавить
+          </q-btn>
+        </q-card-section>
+      </q-form>
+    </q-card>
   </q-dialog>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+.add-song {
+  &__dialog {
+    background-color: #fff;
+  }
+}
 </style>

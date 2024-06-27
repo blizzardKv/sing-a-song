@@ -1,7 +1,7 @@
 import { routeNames } from 'src/router/route-names';
 
 export const songsRoute = {
-  path: '/songs',
+  path: '/albums/:id',
   component: () => import('layouts/MainLayout.vue'),
   children: [
     {

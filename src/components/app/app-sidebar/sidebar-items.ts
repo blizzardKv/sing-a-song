@@ -10,9 +10,5 @@ export const sidebarItems: SidebarItem[] = [
     title: 'Albums',
     icon: 'album',
     route: { name: routeNames.ALBUMS },
-  }, {
-    title: 'Songs',
-    icon: 'lyrics',
-    route: { name: routeNames.SONGS },
   },
 ];

@@ -9,13 +9,14 @@ const { musicLibrary } = storeToRefs(appStore);
 <template>
   <q-list>
     <q-item-label>Альбомы</q-item-label>
-    <q-item v-for="{ name, id, year } in musicLibrary.albums" :key="id" clickable>
+    <q-item
+      v-for="{ name, id, year } in musicLibrary.albums"
+      :key="id"
+      :to="`/albums/${id}`"
+      clickable
+    >
       <q-item-section>{{ name }}</q-item-section>
       <q-item-section>{{ year }}</q-item-section>
     </q-item>
   </q-list>
 </template>
-
-<style scoped>
-
-</style>

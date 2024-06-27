@@ -10,7 +10,7 @@ const getSrc = (key: number) => `https://i.pravatar.cc/150?${key}`;
 
 <template>
   <q-list>
-    <q-item-label>Исполнители</q-item-label>
+    <q-item-label>Исполнители:</q-item-label>
     <q-item
       v-for="({ id, name }, key) in musicLibrary.artists"
       :key="id"
