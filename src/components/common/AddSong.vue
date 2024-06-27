@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useAppStore } from 'stores/app';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import { QDialog, useQuasar } from 'quasar';
+
+const $q = useQuasar();
 
 const emit = defineEmits<{
   'close-modal': []
 }>();
 
+const router = useRoute();
+const currentAlbum = router.params.id;
+
+const appStore = useAppStore();
+const { musicLibrary } = storeToRefs(appStore);
+
+const dialogComponent = ref<QDialog | null>(null);
 const isDialogShown = ref(true);
 const songName = ref('');
 
@@ -13,16 +26,61 @@ const onDialogHide = () => {
   isDialogShown.value = true;
   emit('close-modal');
 };
+
+const onFormSubmit = () => {
+  try {
+    const { songs } = musicLibrary.value;
+    const currentAlbumToNumber = parseInt(currentAlbum as string, 10);
+    const songNameValue = songName.value;
+
+    let songItem = songs.find((song) => song.name === songNameValue);
+
+    if (!songItem) {
+      const newId = songs.length ? songs[songs.length - 1].id + 1 : 1;
+      songItem = {
+        id: newId,
+        name: songNameValue,
+        albums: [],
+      };
+      songs.push(songItem);
+    }
+
+    let lastTrackNumber = 0;
+    songs.forEach((song) => {
+      song.albums.forEach((album) => {
+        if (album.albumId === currentAlbumToNumber && album.trackNumber > lastTrackNumber) {
+          lastTrackNumber = album.trackNumber;
+        }
+      });
+    });
+
+    songItem.albums.push({
+      albumId: currentAlbumToNumber,
+      trackNumber: lastTrackNumber + 1,
+    });
+    $q.notify({
+      message: 'Песня успешно добавлена',
+      color: 'success',
+    });
+    dialogComponent.value?.hide();
+  } catch (error) {
+    $q.notify({
+      message: 'Ошибка добавления песни',
+      color: 'error',
+    });
+  }
+};
 </script>
 
 <template>
   <q-dialog
+    ref="dialogComponent"
     v-model="isDialogShown"
     class="add-song"
     @hide="onDialogHide"
   >
     <q-card class="q-pa-md">
-      <q-form>
+      <q-form @submit.prevent="onFormSubmit">
         <q-card-section>
           <h5 class="q-ma-none">
             Добавить песню в альбом

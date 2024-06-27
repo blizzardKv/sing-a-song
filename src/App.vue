@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount } from 'vue';
+import { onBeforeMount } from 'vue';
 import { getLocalStorageItem, setLocalStorageItem } from 'src/helpers/local-storage-handlers';
 import { useAppStore } from 'stores/app';
 import { storeToRefs } from 'pinia';
@@ -26,7 +26,5 @@ onBeforeMount(() => {
   musicLibrary.value = JSON.parse(localStorageData);
 });
 
-onBeforeUnmount(() => {
-  saveDataToStorage();
-});
+document.addEventListener('onbeforeunload', saveDataToStorage);
 </script>
