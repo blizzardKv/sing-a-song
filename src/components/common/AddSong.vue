@@ -56,10 +56,6 @@ const isSongExistInCurrentAlbum = (
   return false;
 };
 
-const addNewSong = () => {
-
-};
-
 const onFormSubmit = () => {
   try {
     const { songs } = musicLibrary.value;
