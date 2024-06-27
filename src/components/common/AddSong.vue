@@ -5,6 +5,15 @@ import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { QDialog, useQuasar } from 'quasar';
 
+interface SongsItem {
+  id: number,
+  name: string,
+  albums: {
+    albumId: number,
+    trackNumber: number,
+  }[]
+}
+
 const $q = useQuasar();
 
 const emit = defineEmits<{
@@ -27,11 +36,37 @@ const onDialogHide = () => {
   emit('close-modal');
 };
 
+const isSongExistInCurrentAlbum = (
+  songs: SongsItem[],
+  songNameValue: string,
+  currentAlbumToNumber: number,
+) => {
+  const isExists = songs
+    .find((song) => song.name === songNameValue)
+    ?.albums.some((album) => album.albumId === currentAlbumToNumber);
+
+  if (isExists) {
+    $q.notify({
+      message: 'Наименование песни уже есть в данном альбоме, выберите другое название',
+      color: 'warning',
+    });
+    return true;
+  }
+
+  return false;
+};
+
+const addNewSong = () => {
+
+};
+
 const onFormSubmit = () => {
   try {
     const { songs } = musicLibrary.value;
-    const currentAlbumToNumber = parseInt(currentAlbum as string, 10);
     const songNameValue = songName.value;
+    const currentAlbumToNumber = parseInt(currentAlbum as string, 10);
+
+    if (isSongExistInCurrentAlbum(songs, songNameValue, currentAlbumToNumber)) return;
 
     let songItem = songs.find((song) => song.name === songNameValue);
 
