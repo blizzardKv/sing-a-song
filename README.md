@@ -1,33 +1,37 @@
-# Quasar App (quasar-project)
+# Test songs project
 
-A Quasar Project
+Запуск режима разработки
 
 ## Install the dependencies
 ```bash
-yarn
-# or
 npm install
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev
+npm run dev
+
+или
+
+quasar d
 ```
 
+Возможен запуск дев-мода через docker-контейнер
 
-### Lint the files
+### Установка зависимостей
+
 ```bash
-yarn lint
-# or
-npm run lint
+docker build -t dockerize-quasar .
 ```
 
+### Запуск контейнера
 
-
-### Build the app for production
 ```bash
-quasar build
+docker run -it -p 8000:80 --rm dockerize-quasar
 ```
 
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+Контейнер будет запущен по адресу
+
+```bash
+https://localhost:8000
+```
